@@ -18,6 +18,11 @@
   font-size: 1.5em;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+}
+
 .App-intro {
   font-size: large;
 }
