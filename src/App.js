@@ -32,7 +32,8 @@ class App extends Component {
 		super(props);
 
 		this.state = {
-			input: ''
+			input: '',
+			boundingBox: {},
 		}
 
 		this.onInputChange = this.onInputChange.bind(this);
@@ -42,18 +43,25 @@ class App extends Component {
 		console.log(event.target.value);
 		this.setState({
 			input: event.target.value,
-			boundingBox: {},
 		});
 	}
 
 	calculateImageFaceBounds = boundingBox => {
-		this.setState({ boundingBox });
+		
 
 		const image = document.querySelector('#face-image');
 		const imageHeight = image.height;
 		const imageWidth = image.width;
 		console.log('imageHeight', imageHeight);
 		console.log('imageWidth', imageWidth);
+		this.setState({ 
+			boundingBox: {
+				leftCol: boundingBox.left_col * imageWidth,
+				rightCol: imageWidth - (boundingBox.right_col * imageWidth),
+				bottomRow: imageHeight - (boundingBox.bottom_row * imageHeight),
+				topRow: boundingBox.top_row * imageHeight,
+			} 
+		});
 	}
 
 	onButtonClick = (event) => {
@@ -88,6 +96,7 @@ class App extends Component {
         />
         <FaceRecognition
         	imgUrl={this.state.input}
+        	boundingBox={this.state.boundingBox}
         />
       </div>
     );
